@@ -25,7 +25,10 @@ namespace ApiTrivIA.Services
 
             using (var con = new SqlConnection(cadenaSql))
             {
+                // Ejecutamos el procedimiento almacenado
                 var usuario = await con.QueryFirstOrDefaultAsync<Usuario>(query, parametros, commandType: CommandType.StoredProcedure);
+
+                // Si el usuario no existe o las credenciales son incorrectas, retornamos null
                 return usuario;
             }
         }

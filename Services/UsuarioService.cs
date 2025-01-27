@@ -38,8 +38,8 @@ namespace ApiTrivIA.Services
                 return usuarioObtenido;
             }
         }
-          
-        
+
+
         public async Task<string> CrearUsuario(Usuario objeto)
         {
             string query = "sp_crearUsuario";
@@ -47,13 +47,17 @@ namespace ApiTrivIA.Services
             parametros.Add("@usuario", objeto.usuario, dbType: DbType.String);
             parametros.Add("@correo", objeto.correo, dbType: DbType.String);
             parametros.Add("@contrasenia", objeto.contrasenia, dbType: DbType.String);
-            parametros.Add("@msgError", dbType: DbType.String, direction:ParameterDirection.Output,size:100);
+            parametros.Add("@msgError", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+
             using (var con = new SqlConnection(cadenaSql))
             {
                 await con.ExecuteAsync(query, parametros, commandType: CommandType.StoredProcedure);
-                return parametros.Get<string>("@msgError");
+                bool msgError = parametros.Get<bool>("@msgError");
+                return msgError ? "TRUE" : "FALSE";
             }
         }
+
+
 
         public async Task<string> EditarUsuario(Usuario objeto)
         {

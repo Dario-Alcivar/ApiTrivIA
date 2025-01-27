@@ -45,13 +45,14 @@ namespace ApiTrivIA.Controllers
         {
             var resultado = await _usuarioService.CrearUsuario(objeto);
 
-            if (resultado != "")
+            if (resultado.Contains("\"status\": \"FALSE\""))
             {
+                
                 return BadRequest(resultado);
             }
             else
             {
-                return Ok("Se ha registrado exitosamente.");
+                return Ok(resultado);
             }
         }
 

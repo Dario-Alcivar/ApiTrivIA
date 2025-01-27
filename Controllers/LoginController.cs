@@ -32,7 +32,17 @@ namespace ApiTrivIA.Controllers
                 return Unauthorized("Credenciales inválidas.");
             }
 
-            return Ok("Login exitoso.");
+            // Devolvemos los datos del usuario si la autenticación es exitosa
+            return Ok(new
+            {
+                message = "Login exitoso.",
+                usuario = new
+                {
+                    usuario.uidUsuario,
+                    usuario.usuario,
+                    usuario.correo
+                }
+            });
         }
     }
 }
